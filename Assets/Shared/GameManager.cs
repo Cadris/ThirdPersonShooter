@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager 
 {
     private GameObject gameObject;
+    public event System.Action<Player> OnLocalPlayerJoined;
 
     private static GameManager m_Instance;
     public static GameManager Instance{
@@ -27,6 +28,18 @@ public class GameManager
                 m_InputController = gameObject.GetComponent<InputController>();
             }
             return m_InputController;
+        }
+    }
+
+    private Player m_LocalPlayer;
+    public Player LocalPlayer{
+        get{
+            return m_LocalPlayer;
+        }
+        set{
+            m_LocalPlayer=value;
+            if(OnLocalPlayerJoined != null)
+                OnLocalPlayerJoined(m_LocalPlayer);
         }
     }
 }
